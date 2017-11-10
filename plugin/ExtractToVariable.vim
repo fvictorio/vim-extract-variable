@@ -13,6 +13,8 @@ function! s:ExtractToVariable(visual_mode)
     execute "normal! Oconst ".varname." = ".@z."\<esc>"
   elseif l:filetype ==# 'go'
     execute "normal! O".varname." := ".@z."\<esc>"
+  elseif l:filetype ==# 'python' || l:filetype ==# 'ruby'
+    execute "normal! O".varname." = ".@z."\<esc>"
   endif
 endfunction
 
