@@ -18,5 +18,5 @@ function! s:ExtractToVariable(visual_mode)
   endif
 endfunction
 
-nnoremap <leader>ev :call <sid>ExtractToVariable(visualmode())<cr>
+nnoremap <leader>ev :call <sid>ExtractToVariable('')<cr>
 vnoremap <leader>ev :<c-u>call <sid>ExtractToVariable(visualmode())<cr>
