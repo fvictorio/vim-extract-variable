@@ -1,3 +1,8 @@
+if exists("g:loaded_extract_variable") || &cp
+  finish
+endif
+let g:loaded_extract_variable = 1
+
 function! s:ExtractToVariable(visual_mode)
   " Check if 'filetype' is set
   if &filetype == ''
