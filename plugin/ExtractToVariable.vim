@@ -4,7 +4,14 @@ function! s:ExtractToVariable(visual_mode)
   else
     execute "normal! vib\"zy"
   endif
+
   let varname = input('Variable name? ')
+  if !varname
+    redraw
+    echo 'Empty variable name, doing nothing'
+    return
+  endif
+
   execute "normal! `<v`>s".varname."\<esc>"
 
   let l:filetype = split(&filetype, '\.')[0]
