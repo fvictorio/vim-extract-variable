@@ -24,6 +24,7 @@ The following languages are supported:
 
 | Language              | Result                   |
 | ----------------------| ------------------------ |
+| Elixir                | `foo = 42`               |
 | Go                    | `foo := 42`              |
 | JavaScript            | `const foo = 42`         |
 | Python                | `foo = 42`               |
