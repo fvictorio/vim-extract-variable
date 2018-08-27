@@ -27,5 +27,6 @@ The following languages are supported:
 | Elixir                | `foo = 42`               |
 | Go                    | `foo := 42`              |
 | JavaScript            | `const foo = 42`         |
+| Make                  | `foo := 42`              |
 | Python                | `foo = 42`               |
 | Ruby                  | `foo = 42`               |
