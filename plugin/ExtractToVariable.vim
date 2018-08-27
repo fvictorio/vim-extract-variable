@@ -33,7 +33,7 @@ function! s:ExtractToVariable(visual_mode)
   if varname != ''
     let replace_expr = varname
     if l:filetype ==# 'make'
-      replace_expr = '$(' . replace_expr . ')'
+      replace_expr = "\\\$(" . replace_expr . ')'
     endif
     execute "normal! `<v`>s".replace_expr."\<esc>"
 
