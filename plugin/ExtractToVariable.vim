@@ -21,6 +21,7 @@ function! s:ExtractToVariable(visual_mode)
 
   " Yank expression to z register
   let saved_z = @z
+  let saved_y = @y
   if a:visual_mode ==# 'v'
     execute "normal! `<v`>\"zy"
   else
@@ -33,9 +34,21 @@ function! s:ExtractToVariable(visual_mode)
   if varname != ''
     let replace_expr = varname
     if l:filetype ==# 'make'
-      replace_expr = "\\\$(" . replace_expr . ')'
+      let replace_expr = "\$(" . replace_expr . ')'
     endif
-    execute "normal! `<v`>s".replace_expr."\<esc>"
+    let @y = replace_expr
+    " execute "normal! `<v`>s".replace_expr."\<esc>"
+    py << EOF
+import vim
+import string
+
+needle = vim.eval('@z')
+repl = vim.eval('@y')
+def my_func(s):
+    return string.replace(s, needle, repl)
+
+EOF
+    :'<,$pydo return my_func(line)
 
     if l:filetype ==# 'javascript'
       execute "normal! Oconst ".varname." = ".@z."\<esc>"
@@ -52,6 +65,7 @@ function! s:ExtractToVariable(visual_mode)
   endif
 
   let @z = saved_z
+  let @y = saved_y
 endfunction
 
 nnoremap <leader>ev :call <sid>ExtractToVariable('')<cr>
