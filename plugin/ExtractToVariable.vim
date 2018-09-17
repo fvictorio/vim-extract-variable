@@ -11,7 +11,7 @@ function! s:ExtractToVariable(visual_mode)
   endif
 
   " Check if language is supported
-  let l:supported_languages = ['elixir', 'go', 'javascript', 'python', 'ruby']
+  let l:supported_languages = ['elixir', 'go', 'javascript', 'make', 'python', 'ruby']
   let l:filetype = split(&filetype, '\.')[0]
 
   if index(l:supported_languages, l:filetype) == -1
@@ -21,6 +21,7 @@ function! s:ExtractToVariable(visual_mode)
 
   " Yank expression to z register
   let saved_z = @z
+  let saved_y = @y
   if a:visual_mode ==# 'v'
     execute "normal! `<v`>\"zy"
   else
@@ -31,10 +32,28 @@ function! s:ExtractToVariable(visual_mode)
   let varname = input('Variable name? ')
 
   if varname != ''
-    execute "normal! `<v`>s".varname."\<esc>"
+    let replace_expr = varname
+    if l:filetype ==# 'make'
+      let replace_expr = "\$(" . replace_expr . ')'
+    endif
+    let @y = replace_expr
+    " execute "normal! `<v`>s".replace_expr."\<esc>"
+    py << EOF
+import vim
+import string
+
+needle = vim.eval('@z')
+repl = vim.eval('@y')
+def my_func(s):
+    return string.replace(s, needle, repl)
+
+EOF
+    :'<,$pydo return my_func(line)
 
     if l:filetype ==# 'javascript'
       execute "normal! Oconst ".varname." = ".@z."\<esc>"
+    elseif l:filetype ==# 'make'
+      execute "normal! O".varname." := ".@z."\<esc>"
     elseif l:filetype ==# 'go'
       execute "normal! O".varname." := ".@z."\<esc>"
     elseif l:filetype ==# 'elixir' || l:filetype ==# 'python' || l:filetype ==# 'ruby'
@@ -46,6 +65,7 @@ function! s:ExtractToVariable(visual_mode)
   endif
 
   let @z = saved_z
+  let @y = saved_y
 endfunction
 
 nnoremap <leader>ev :call <sid>ExtractToVariable('')<cr>
