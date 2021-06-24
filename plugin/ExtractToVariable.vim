@@ -11,7 +11,7 @@ function! s:ExtractToVariable(visual_mode)
   endif
 
   " Check if language is supported
-  let l:supported_languages = ['elixir', 'go', 'javascript', 'r', 'typescript', 'python', 'ruby']
+  let l:supported_languages = ['elixir', 'go', 'javascript', 'r', 'typescript', 'python', 'ruby', 'julia']
   let l:filetype = split(&filetype, '\.')[0]
 
   if index(l:supported_languages, l:filetype) == -1
