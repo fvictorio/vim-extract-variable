@@ -11,7 +11,7 @@ function! s:ExtractToVariable(visual_mode)
   endif
 
   " Check if language is supported
-  let l:supported_languages = ['elixir', 'go', 'javascript', 'r', 'typescript', 'python', 'ruby', 'julia']
+  let l:supported_languages = ['elixir', 'go', 'javascript', 'r', 'typescript', 'typescriptreact', 'python', 'ruby', 'julia']
   let l:filetype = split(&filetype, '\.')[0]
 
   if index(l:supported_languages, l:filetype) == -1
@@ -33,7 +33,8 @@ function! s:ExtractToVariable(visual_mode)
   if varname != ''
     execute "normal! `<v`>s".varname."\<esc>"
 
-    if l:filetype ==# 'javascript' || l:filetype ==# 'typescript'
+    if l:filetype ==# 'javascript' || l:filetype ==# 'typescript' || l:filetype ==# 'typescriptreact'
+
       execute "normal! Oconst ".varname." = ".@z."\<esc>"
     elseif l:filetype ==# 'go'
       execute "normal! O".varname." := ".@z."\<esc>"
