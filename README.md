@@ -32,4 +32,4 @@ The following languages are supported:
 | TypeScript            | `const foo = 42`         |
 | Python                | `foo = 42`               |
 | C#                    | 'var foo = 42;'          |
-| c++                   | 'auto foo = 42;'         |
+| C++                   | 'auto foo = 42;'         |
