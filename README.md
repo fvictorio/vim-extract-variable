@@ -31,5 +31,5 @@ The following languages are supported:
 | Ruby                  | `foo = 42`               |
 | TypeScript            | `const foo = 42`         |
 | Python                | `foo = 42`               |
-| C#                    | 'var foo = 42;'          |
-| C++                   | 'auto foo = 42;'         |
+| C#                    | `var foo = 42;`          |
+| C++                   | `auto foo = 42;`         |
